@@ -166,6 +166,7 @@
     <Compile Include="Controllers\FlightsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManagersController.cs" />
+    <Compile Include="Controllers\ReservesController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -195,6 +196,9 @@
     <Compile Include="Models\Manager.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Reserve.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Rol.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
@@ -215,8 +219,8 @@
     <Content Include="Global.asax" />
     <Content Include="Models\DataBase.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>DataBase.Context.cs</LastGenOutput>
       <DependentUpon>DataBase.edmx</DependentUpon>
+      <LastGenOutput>DataBase.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\DataBase.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

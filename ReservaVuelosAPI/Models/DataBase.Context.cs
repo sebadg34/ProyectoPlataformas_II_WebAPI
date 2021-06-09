@@ -29,5 +29,6 @@ namespace ReservaVuelosAPI.Models
         public virtual DbSet<Flight> Flight { get; set; }
         public virtual DbSet<Manager> Manager { get; set; }
         public virtual DbSet<Rol> Rol { get; set; }
+        public virtual DbSet<Reserve> Reserve { get; set; }
     }
 }
