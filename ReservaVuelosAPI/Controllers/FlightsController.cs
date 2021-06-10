@@ -9,9 +9,11 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using ReservaVuelosAPI.Models;
+using System.Web.Http.Cors;
 
 namespace ReservaVuelosAPI.Controllers
 {
+    [EnableCors(origins: "http://localhost:52811", headers: "*", methods: "*")]
     public class FlightsController : ApiController
     {
         private DBEntities db = new DBEntities();
