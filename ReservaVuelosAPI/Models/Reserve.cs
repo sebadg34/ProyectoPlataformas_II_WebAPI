@@ -11,7 +11,12 @@ namespace ReservaVuelosAPI.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    /// <summary>
+    /// Clase parcial del modelo del Reserve, contiene la declaración de cada una de sus propiedades.
+    /// ID es la clave primaria, es correlativa al ID del modelo Rol.
+    /// ID_Flight corresponde al ID del modelo Flight.
+    /// ID_Customer corresponde al ID del modelo Customer.
+    /// </summary>
     public partial class Reserve
     {
         public int ID_Flight { get; set; }

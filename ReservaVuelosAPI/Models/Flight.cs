@@ -11,7 +11,10 @@ namespace ReservaVuelosAPI.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    /// <summary>
+    /// Clase parcial del modelo del Flight, contiene la declaración de cada una de sus propiedades.
+    /// ID es la clave primaria.
+    /// </summary>
     public partial class Flight
     {
         public int ID { get; set; }
