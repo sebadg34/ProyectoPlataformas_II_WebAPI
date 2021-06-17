@@ -8,7 +8,7 @@ namespace ReservaVuelosAPI.Models
 {
     /// <summary>
     /// Clase parcial del modelo de rol, usada para validar las entradas de la entidad Rol.
-    /// Se utiliza Metadata para hacer la relación con el modelo de datos Rol.
+    /// Se utiliza Metadata para hacer la relacion con el modelo de datos Rol.
     /// </summary>
     [MetadataType(typeof(Rol.Metadata))]
     public partial class Rol
@@ -21,16 +21,16 @@ namespace ReservaVuelosAPI.Models
             [EmailAddress]
             public string Email;
 
-            //Validación de la contraseña; es un campo requerido y exige el dato tipo password.
+            // Validacion de la contraseña; es un campo requerido y exige el dato tipo password.
             [Required(ErrorMessage = "Ingrese correctamente la contraseña.")]
             [DataType(DataType.Password)]
             public string Contrasenia;
 
-            //Validación del ID rol; es un campo requerido. Es false cuando es cliente, true cuando es administrador.
+            // Validacion del ID rol; es un campo requerido. Es false cuando es cliente, true cuando es administrador.
             [Required]
             public bool ID_Rol;
 
-            //ID es la clave primaria. Es autogenerado (incrementado automático en la base de datos) así que no es necesario validarlo más que eso.
+            // ID es la clave primaria. Es autogenerado (incrementado automatico en la base de datos) asi que no es necesario validarlo mas que eso.
             [Key]
             public int ID;
         }

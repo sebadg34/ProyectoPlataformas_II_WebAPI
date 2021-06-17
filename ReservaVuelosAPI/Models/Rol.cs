@@ -12,7 +12,7 @@ namespace ReservaVuelosAPI.Models
     using System;
     using System.Collections.Generic;
     /// <summary>
-    /// Clase parcial del modelo del Rol, contiene la declaración de cada una de sus propiedades.
+    /// Clase parcial del modelo del Rol, contiene la declaracion de cada una de sus propiedades.
     /// ID es la clave primaria.
     /// ID_Rol es false cuando se trata de Customer y true cuando se trata de Manager.
     /// </summary>

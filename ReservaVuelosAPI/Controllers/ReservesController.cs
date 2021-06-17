@@ -14,16 +14,16 @@ using System.Web.Http.Cors;
 namespace ReservaVuelosAPI.Controllers
 {
     /// <summary>
-    /// Reserve controller, está relacionado directamente al modelo Reserve.
+    /// Reserve controller, esta relacionado directamente al modelo Reserve.
     /// </summary>
     [EnableCors(origins: "http://localhost:52811", headers: "*", methods: "*")]
     public class ReservesController : ApiController
     {
-        //Obtiene la entidad de la base de datos.
+        // Obtiene la entidad de la base de datos.
         private DBEntities db = new DBEntities();
 
         /// <summary>
-        /// Método que obtiene todas las reservas en la base de datos.
+        /// Metodo que obtiene todas las reservas en la base de datos.
         /// </summary>
         /// <returns>
         /// Retorna todas las filas de reservas existentes en la base de datos.</returns>
@@ -34,13 +34,13 @@ namespace ReservaVuelosAPI.Controllers
         }
 
         /// <summary>
-        /// Método que obtiene una reserva dado un id en específico.
+        /// Metodo que obtiene una reserva dado un id en especifico.
         /// </summary>
         /// <param name="id">
-        ///  id se recibe desde la aplicación web.
+        ///  id se recibe desde la aplicacion web.
         /// </param>
         /// <returns>
-        /// Retona la información de la reserva si es que lo encuentra.
+        /// Retona la informacion de la reserva si es que lo encuentra.
         /// </returns>
         // GET: api/Reserves/5
         [ResponseType(typeof(Reserve))]
@@ -56,13 +56,13 @@ namespace ReservaVuelosAPI.Controllers
         }
 
         /// <summary>
-        /// Método que realiza una inserción en la base de datos dada una reserva en específico.
+        /// Metodo que realiza una insercion en la base de datos dada una reserva en especifico.
         /// </summary>
         /// <param name="reserve">
-        ///  reserve se recibe desde la aplicación web.
+        ///  reserve se recibe desde la aplicacion web.
         ///  </param>
         /// <returns>
-        /// Retorna el estado del método, si se pudo realizar la inserción o no.
+        /// Retorna el estado del metodo, si se pudo realizar la insercion o no.
         /// </returns>
         // POST: api/Reserves
         [ResponseType(typeof(Reserve))]
@@ -98,17 +98,17 @@ namespace ReservaVuelosAPI.Controllers
         /// Verifica si la reserva existe.
         /// </summary>
         /// <param name="id">
-        ///  id se recibe desde la aplicación web.
+        ///  id se recibe desde la aplicacion web.
         /// </param>
         /// <returns>
-        /// Devuelve el número de elementos que satisfacen la condición.</returns>
+        /// Devuelve el numero de elementos que satisfacen la condicion.</returns>
         private bool ReserveExists(int id)
         {
             return db.Reserve.Count(e => e.ID_Flight == id) > 0;
         }
 
-        #region Métodos temporales
-        /**Método aún no usado, se verá si se utilizará.
+        #region Metodos temporales
+        /** Metodo aun no usado, se vera si se utilizara.
         // PUT: api/Reserves/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutReserve(int id, Reserve reserve)
@@ -142,9 +142,9 @@ namespace ReservaVuelosAPI.Controllers
             }
 
             return StatusCode(HttpStatusCode.NoContent);
-        }**/
+        } **/
 
-        /**Método aún no usado, se verá si se utilizará.
+        /** Metodo aun no usado, se vera si se utilizara.
         // DELETE: api/Reserves/5
         [ResponseType(typeof(Reserve))]
         public IHttpActionResult DeleteReserve(int id)
@@ -159,9 +159,9 @@ namespace ReservaVuelosAPI.Controllers
             db.SaveChanges();
 
             return Ok(reserve);
-        }**/
+        } **/
 
-        /**Método aún no usado, se verá si se utilizará.
+        /** Metodo aun no usado, se vera si se utilizara.
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -169,7 +169,7 @@ namespace ReservaVuelosAPI.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }**/
+        } **/
         #endregion
 
     }

@@ -14,16 +14,16 @@ using System.Web.Http.Cors;
 namespace ReservaVuelosAPI.Controllers
 {
     /// <summary>
-    /// Manager controller, está relacionado directamente al modelo Manager.
+    /// Manager controller, esta relacionado directamente al modelo Manager.
     /// </summary>
     [EnableCors(origins: "http://localhost:52811", headers: "*", methods: "*")]
     public class ManagersController : ApiController
     {
-        //Obtiene la entidad de la base de datos.
+        // Obtiene la entidad de la base de datos.
         private DBEntities db = new DBEntities();
 
         /// <summary>
-        /// Método que obtiene todos los administradores de la base de datos.
+        /// Metodo que obtiene todos los administradores de la base de datos.
         /// </summary>
         /// <returns>
         /// Retorna todos los administradores existentes en la base de datos.
@@ -35,13 +35,13 @@ namespace ReservaVuelosAPI.Controllers
         }
 
         /// <summary>
-        /// Método que obtiene a un administrador dada una id en específico.
+        /// Metodo que obtiene a un administrador dada una id en especifico.
         /// </summary>
         /// <param name="id">
-        ///  id se recibe desde la aplicación web.
+        ///  id se recibe desde la aplicacion web.
         /// </param>
         /// <returns>
-        /// Retona la información del administrador si es que lo encuentra.
+        /// Retona la informacion del administrador si es que lo encuentra.
         /// </returns>
         // GET: api/Managers/5
         [ResponseType(typeof(Manager))]
@@ -56,13 +56,13 @@ namespace ReservaVuelosAPI.Controllers
             return Ok(manager);
         }
         /// <summary>
-        ///  Método que realiza una inserción en la base de datos dado un administrador en específico.
+        ///  Metodo que realiza una inserción en la base de datos dado un administrador en especifico.
         /// </summary>
         /// <param name="manager">
-        ///  manager se recibe desde la aplicación web.
+        ///  manager se recibe desde la aplicacion web.
         /// </param>
         /// <returns>
-        /// Retorna el estado del método, si se pudo realizar la inserción o no.
+        /// Retorna el estado del metodo, si se pudo realizar la insercion o no.
         /// </returns>
         // POST: api/Managers
         [ResponseType(typeof(Manager))]
@@ -99,14 +99,14 @@ namespace ReservaVuelosAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns>
-        /// Devuelve el número de elementos que satisfacen la condición.</returns>
+        /// Devuelve el numero de elementos que satisfacen la condicion.</returns>
         private bool ManagerExists(int id)
         {
             return db.Manager.Count(e => e.ID == id) > 0;
         }
 
-        #region Métodos temporales
-        /**Método aún no usado, se verá si se utilizará.
+        #region Metodos temporales
+        /** Metodo aun no usado, se vera si se utilizara.
         // PUT: api/Managers/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutManager(int id, Manager manager)
@@ -140,9 +140,9 @@ namespace ReservaVuelosAPI.Controllers
             }
 
             return StatusCode(HttpStatusCode.NoContent);
-        }**/
+        } **/
 
-        /**Método aún no usado, se verá si se utilizará.
+        /** Metodo aun no usado, se vera si se utilizara.
         // DELETE: api/Managers/5
         [ResponseType(typeof(Manager))]
         public IHttpActionResult DeleteManager(int id)
@@ -157,9 +157,9 @@ namespace ReservaVuelosAPI.Controllers
             db.SaveChanges();
 
             return Ok(manager);
-        }**/
+        } **/
 
-        /**Método aún no usado, se verá si se utilizará.
+        /** Metodo aun no usado, se vera si se utilizara.
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -167,7 +167,7 @@ namespace ReservaVuelosAPI.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }**/
+        } **/
         #endregion
     }
 }

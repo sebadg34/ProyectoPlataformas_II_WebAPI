@@ -14,16 +14,16 @@ using System.Web.Http.Cors;
 namespace ReservaVuelosAPI.Controllers
 {
     /// <summary>
-    /// Customer controller, está relacionado directamente al modelo Customer.
+    /// Customer controller, esta relacionado directamente al modelo Customer.
     /// </summary>
     [EnableCors(origins: "http://localhost:52811", headers: "*", methods: "*")]
     public class CustomersController : ApiController
     {
-        //Obtiene la entidad de la base de datos.
+        // Obtiene la entidad de la base de datos.
         private DBEntities db = new DBEntities();
 
         /// <summary>
-        /// Método que obtiene todos los clientes de la base de datos.
+        /// Metodo que obtiene todos los clientes de la base de datos.
         /// </summary>
         /// <returns>
         /// Retorna todos los clientes existentes en la base de datos.
@@ -35,10 +35,10 @@ namespace ReservaVuelosAPI.Controllers
         }
 
         /// <summary>
-        /// Método que obtiene a un cliente dada una id en específico.
+        /// Metodo que obtiene a un cliente dada una id en específico.
         /// </summary>
         /// <param name="id">
-        /// id es recibido desde la aplicación web.
+        /// id es recibido desde la aplicacion web.
         /// </param>
         /// <returns>
         /// Retona la información del cliente si es que lo encuentra.
@@ -57,13 +57,13 @@ namespace ReservaVuelosAPI.Controllers
         }
 
         /// <summary>
-        /// Método que realiza una inserción en la base de datos dado un cliente en específico.
+        /// Metodo que realiza una inserción en la base de datos dado un cliente en especifico.
         /// </summary>
         /// <param name="customer">
-        /// customer es recibido desde la aplicación web.
+        /// Customer es recibido desde la aplicacion web.
         /// </param>
         /// <returns>
-        ///  Retorna el estado del método, si se pudo realizar la inserción o no.
+        ///  Retorna el estado del metodo, si se pudo realizar la insercion o no.
         /// </returns>
         // POST: api/Customers
         [ResponseType(typeof(Customer))]
@@ -99,17 +99,17 @@ namespace ReservaVuelosAPI.Controllers
         /// Verifica si el cliente existe.
         /// </summary>
         /// <param name="id">
-        /// id se recibe desde la aplicación web.
+        /// id se recibe desde la aplicacion web.
         /// </param>
         /// <returns>
-        /// Devuelve el número de elementos que satisfacen la condición.</returns>
+        /// Devuelve el numero de elementos que satisfacen la condicion.</returns>
         private bool CustomerExists(int id)
         {
             return db.Customer.Count(e => e.ID == id) > 0;
         }
 
-        #region Métodos temporales
-        /**Método aún no usado, se verá si se utilizará.
+        #region Metodos temporales
+        /** Metodo aun no usado, se vera si se utilizara.
        // PUT: api/Customers/5
        [ResponseType(typeof(void))]
        public IHttpActionResult PutCustomer(int id, Customer customer)
@@ -143,9 +143,9 @@ namespace ReservaVuelosAPI.Controllers
            }
 
            return StatusCode(HttpStatusCode.NoContent);
-       }**/
+       } **/
 
-        /**Método aún no usado, se verá si se utilizará.
+        /** Metodo aun no usado, se vera si se utilizara.
         // DELETE: api/Customers/5
         [ResponseType(typeof(Customer))]
         public IHttpActionResult DeleteCustomer(int id)
@@ -160,9 +160,9 @@ namespace ReservaVuelosAPI.Controllers
             db.SaveChanges();
 
             return Ok(customer);
-        }**/
+        } **/
 
-        /**Método aún no usado, se verá si se utilizará.
+        /** Metodo aun no usado, se vera si se utilizara.
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -170,7 +170,7 @@ namespace ReservaVuelosAPI.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }**/
+        } **/
         #endregion
     }
 }

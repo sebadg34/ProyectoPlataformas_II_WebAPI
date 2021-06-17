@@ -14,19 +14,19 @@ using System.Web.Http.Cors;
 namespace ReservaVuelosAPI.Controllers
 {
     /// <summary>
-    /// Flight controller, está relacionado directamente al modelo Flight.
+    /// Flight controller, esta relacionado directamente al modelo Flight.
     /// </summary>
     [EnableCors(origins: "http://localhost:52811", headers: "*", methods: "*")]
     public class FlightsController : ApiController
     {
-        //Obtiene la entidad de la base de datos.
+        // Obtiene la entidad de la base de datos.
         private DBEntities db = new DBEntities();
 
         /// <summary>
-        /// Método que obtiene todos los vuelos de la base de datos.
+        /// Metodo que obtiene todos los vuelos de la base de datos.
         /// </summary>
         /// <returns>
-        ///  Retorna todos los vuelos existentes en la base de datos.
+        /// Retorna todos los vuelos existentes en la base de datos.
         /// </returns>
         // GET: api/Flights
         public IQueryable<Flight> GetFlight()
@@ -35,13 +35,13 @@ namespace ReservaVuelosAPI.Controllers
         }
 
         /// <summary>
-        /// Método que obtiene a un vuelo dada una id en específico.
+        /// Metodo que obtiene a un vuelo dada una id en especifico.
         /// </summary>
         /// <param name="id">
-        /// id se recibe desde la aplicación web.
+        /// id se recibe desde la aplicacion web.
         /// </param>
         /// <returns>
-        /// Retona la información del vuelo si es que lo encuentra.
+        /// Retona la informacion del vuelo si es que lo encuentra.
         /// </returns>
         // GET: api/Flights/5
         [ResponseType(typeof(Flight))]
@@ -57,13 +57,13 @@ namespace ReservaVuelosAPI.Controllers
         }
 
         /// <summary>
-        ///  Método que realiza una inserción en la base de datos dado un vuelo en específico
+        ///  Metodo que realiza una insercion en la base de datos dado un vuelo en especifico
         /// </summary>
         /// <param name="flight">
-        /// flight se recibe desde la aplicación web.
+        /// flight se recibe desde la aplicacion web.
         /// </param>
         /// <returns>
-        /// Retorna el estado del método, si se pudo realizar la inserción o no.
+        /// Retorna el estado del metodo, si se pudo realizar la insercion o no.
         /// </returns>
         // POST: api/Flights
         [ResponseType(typeof(Flight))]
@@ -84,16 +84,16 @@ namespace ReservaVuelosAPI.Controllers
         /// Verifica si el vuelo existe.
         /// </summary>
         /// <param name="id">
-        /// id se recibe desde la aplicación web.
+        /// id se recibe desde la aplicacion web.
         /// </param>
         /// <returns>
-        /// Devuelve el número de elementos que satisfacen la condición.</returns>
+        /// Devuelve el numero de elementos que satisfacen la condicion.</returns>
         private bool FlightExists(int id)
         {
             return db.Flight.Count(e => e.ID == id) > 0;
         }
-        #region Métodos temporales
-        /**Método aún no usado, se verá si se utilizará.
+        #region Metodos temporales
+        /** Metodo aun no usado, se vera si se utilizara.
         // PUT: api/Flights/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutFlight(int id, Flight flight)
@@ -127,10 +127,10 @@ namespace ReservaVuelosAPI.Controllers
             }
 
             return StatusCode(HttpStatusCode.NoContent);
-        }**/
+        } **/
 
 
-        /**Método aún no usado, se verá si se utilizará.
+        /** Metodo aun no usado, se vera si se utilizara.
         // DELETE: api/Flights/5
         [ResponseType(typeof(Flight))]
         public IHttpActionResult DeleteFlight(int id)
@@ -145,9 +145,9 @@ namespace ReservaVuelosAPI.Controllers
             db.SaveChanges();
 
             return Ok(flight);
-        }**/
+        } **/
 
-        /**Método aún no usado, se verá si se utilizará.
+        /** Metodo aun no usado, se vera si se utilizara.
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -155,7 +155,7 @@ namespace ReservaVuelosAPI.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }**/
+        } **/
         #endregion
 
     }

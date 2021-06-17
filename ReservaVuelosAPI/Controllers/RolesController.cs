@@ -45,7 +45,7 @@ namespace ReservaVuelosAPI.Controllers
         [ResponseType(typeof(Rol))]
         public IHttpActionResult GetRol(string email)
         {
-            //busca en la entidad de la base de datos si existe un rol que tenga el email enviado por parámetro.
+            // Busca en la entidad de la base de datos si existe un rol que tenga el email enviado por parametro.
             Rol roles = db.Rol.SingleOrDefault(Rol => Rol.Email == email);
 
             if (roles == null)
@@ -71,6 +71,8 @@ namespace ReservaVuelosAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
+            // Encripta la contraseña
+            rol.Contrasenia = BCrypt.Net.BCrypt.HashPassword(rol.Contrasenia);
 
             db.Rol.Add(rol);
             db.SaveChanges();
