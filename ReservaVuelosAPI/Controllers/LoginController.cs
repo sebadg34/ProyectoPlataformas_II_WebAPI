@@ -13,57 +13,49 @@ using System.Web.Http.Cors;
 
 namespace ReservaVuelosAPI.Controllers
 {
+
+    /// <summary>
+    /// Clase encargada de manejar el login del cliente, encargada de encriptar y validar el inicio de sesion.
+    /// </summary>
     [EnableCors(origins: "http://localhost:52811", headers: "*", methods: "*")]
     public class LoginController : ApiController
     {
         private DBEntities db = new DBEntities();
 
-        // GET: api/Login
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET: api/Login/5
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-
-
+        /// <summary>
+        /// Metodo utilizado para entrar al sistema mediante el recibo de un email y contraseña.
+        /// La verificacion se realiza mediante comparacion de hashes creados por Bcrypt.
+        /// </summary>
+        /// <param name="rol">Objeto recibido que contiene el email y contraseña del usuario entrante</param>
+        /// <returns></returns>
         // POST: api/Login
         [ResponseType(typeof(Rol))]
         public IHttpActionResult Post([FromBody]Rol rol)
         {
-
-            string passwordHash = BCrypt.Net.BCrypt.HashPassword(rol.Contrasenia);
+            // En caso de enviar un dato vacio
             if (rol.Email == null || rol.Contrasenia == null)
+            {
                 return BadRequest();
-
+            }
+            // Buscar el usuario registrado en el sistema.
             Rol registeredRol = db.Rol.SingleOrDefault(Rol => Rol.Email == rol.Email);
 
+            // En caso de no encontrar el usuario registrado
             if (registeredRol == null)
             {
                 return NotFound();
             }
 
-            bool verified = BCrypt.Net.BCrypt.Verify(rol.Contrasenia, registeredRol.Contrasenia);
-            if (verified == false)
+            // verificar si la contraseña es correcta.
+            // bool verified = BCrypt.Net.BCrypt.Verify(rol.Contrasenia, registeredRol.Contrasenia);
+            if (!BCrypt.Net.BCrypt.Verify(rol.Contrasenia, registeredRol.Contrasenia))
+            {
                 return NotFound();
-
-            return Ok();
-
-        }
-
-        // PUT: api/Login/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE: api/Login/5
-        public void Delete(int id)
-        {
+            }
+            else
+            {
+                return Ok(registeredRol);
+            }
         }
     }
 }

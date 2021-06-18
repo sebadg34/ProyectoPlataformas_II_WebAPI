@@ -73,7 +73,7 @@ namespace ReservaVuelosAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            
             db.Customer.Add(customer);
 
             try

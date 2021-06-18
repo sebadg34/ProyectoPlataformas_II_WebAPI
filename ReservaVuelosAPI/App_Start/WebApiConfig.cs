@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
-
+using System.Web.Http.Cors;
 namespace ReservaVuelosAPI
 {
     public static class WebApiConfig
@@ -10,7 +10,7 @@ namespace ReservaVuelosAPI
         public static void Register(HttpConfiguration config)
         {
             // Configuración y servicios de API web
-            config.EnableCors();
+            config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
             // Rutas de API web
             config.MapHttpAttributeRoutes();
 

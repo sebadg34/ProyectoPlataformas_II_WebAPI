@@ -71,6 +71,7 @@ namespace ReservaVuelosAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
+
             // Encripta la contraseña
             rol.Contrasenia = BCrypt.Net.BCrypt.HashPassword(rol.Contrasenia);
 
