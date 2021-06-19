@@ -38,7 +38,7 @@ namespace ReservaVuelosAPI.Controllers
         /// Metodo que obtiene a un vuelo dada una id en especifico.
         /// </summary>
         /// <param name="id">
-        /// id se recibe desde la aplicacion web.
+        /// id se recibe desde la aplicacion web, si es -1 significa que quiere buscar el ultimo registro de vuelo
         /// </param>
         /// <returns>
         /// Retona la informacion del vuelo si es que lo encuentra.
@@ -47,13 +47,30 @@ namespace ReservaVuelosAPI.Controllers
         [ResponseType(typeof(Flight))]
         public IHttpActionResult GetFlight(int id)
         {
-            Flight flight = db.Flight.Find(id);
-            if (flight == null)
+            // Se busca el ultimo vuelo
+            if(id == -1)
             {
-                return NotFound();
+                var maxVuelo = db.Flight.Max(Flight => Flight.ID);
+                Flight flight = db.Flight.Find(maxVuelo);
+                
+                if (flight == null)
+                {
+                    return NotFound();
+                }
+                return Ok(flight);
             }
 
-            return Ok(flight);
+            else
+            {
+                Flight flight = db.Flight.Find(id);
+                if (flight == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(flight);
+            }
+            
         }
 
         /// <summary>

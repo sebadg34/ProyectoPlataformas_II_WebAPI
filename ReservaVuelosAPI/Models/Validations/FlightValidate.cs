@@ -27,14 +27,12 @@ namespace ReservaVuelosAPI.Models
             [Required(ErrorMessage = "Ingrese correctamente la ciudad de origen.")]
             public string Ciudad_Origen;
 
-            // Validacion de la fecha de salida; es un campo requerido. Se utilizo una expresion regular para validar la entrada de la fecha. EJ: YYYY-mm-dd HH:MM:SS.
+            // Validacion de la fecha de salida; es un campo requerido.
             [Required(ErrorMessage = "Error en el ingreso de la fecha y hora de salida.")]
-            [RegularExpression("^20[0-9][0-9]-(01|02|03|04|05|06|07|08|09|10|11|12)-([0-2][0-9]|30|31) [0-2][0-9]:[0-5][0-9]:[0-5][0-9].[0]{3}$", ErrorMessage = "Fecha y hora inválida.")]
             public System.DateTime Fecha_Salida;
 
-            // Validacion de la fecha de llegada; es un campo requerido. Se utilizo una expresion regular para validar la entrada de la fecha. EJ: YYYY-mm-dd HH:MM:SS.
+            // Validacion de la fecha de llegada; es un campo requerido.
             [Required(ErrorMessage = "Error en el ingreso de la fecha y hora de salida")]
-            [RegularExpression("^20[0-9][0-9]-(01|02|03|04|05|06|07|08|09|10|11|12)-([0-2][0-9]|30|31) [0-2][0-9]:[0-5][0-9]:[0-5][0-9].[0]{3}$", ErrorMessage = "Fecha y hora inválida.")]
             public System.DateTime Fecha_Llegada;
 
             // Validacion de la categoria; es un campo requerido. Debe ser basico, normal o premium.
