@@ -18,5 +18,17 @@ namespace ReservaVuelosAPI.Models
         public string Contrasenia { get; set; }
         public bool ID_Rol { get; set; }
         public int ID { get; set; }
+
+        public User(string Email, string Contrasenia)
+        {
+            this.Email = Email;
+            this.Contrasenia = Contrasenia;
+
+        }
+
+        public User()
+        {
+
+        }
     }
 }

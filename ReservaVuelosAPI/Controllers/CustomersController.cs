@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using ReservaVuelosAPI.Models;
 
@@ -15,10 +16,16 @@ namespace ReservaVuelosAPI.Controllers
     /// <summary>
     /// Customer controller, esta relacionado directamente al modelo Customer.
     /// </summary>
+    [EnableCors(origins: "http://localhost:52811", headers: "*", methods: "*")]
     public class CustomersController : ApiController
     {
         // Obtiene la entidad de la base de datos.
         private DBEntities db = new DBEntities();
+
+        public void CustomersControllerTest(DBEntities _db, int flag)
+        {
+            db = _db;
+        }
 
         /// <summary>
         /// Metodo que obtiene todos los clientes de la base de datos.
@@ -45,8 +52,12 @@ namespace ReservaVuelosAPI.Controllers
         [ResponseType(typeof(Customer))]
         public IHttpActionResult GetCustomer(int id)
         {
-            Customer customer = db.Customer.Find(id);
-            if (customer == null)
+            Customer customer;
+            try { 
+                customer = db.Customer.Find(id); 
+            }
+            
+            catch(Exception)
             {
                 return NotFound();
             }
@@ -72,13 +83,35 @@ namespace ReservaVuelosAPI.Controllers
                 return BadRequest(ModelState);
             }
 
+            Customer c;
+
+            if (customer.Rut != null)
+            {
+                c = db.Customer.SingleOrDefault(x => x.Rut == customer.Rut);
+
+                if (c != null)
+                {
+                    return Conflict();
+                }
+            }
+
+            if (customer.Numero_Pasaporte != null)
+            {
+                c = db.Customer.SingleOrDefault(x => x.Numero_Pasaporte == customer.Numero_Pasaporte);
+
+                if (c != null)
+                {
+                    return Conflict();
+                }
+            }
+
             db.Customer.Add(customer);
 
             try
             {
                 db.SaveChanges();
             }
-            catch (DbUpdateException)
+            catch (Exception)
             {
                 if (CustomerExists(customer.ID))
                 {
@@ -86,7 +119,7 @@ namespace ReservaVuelosAPI.Controllers
                 }
                 else
                 {
-                    throw;
+                    return BadRequest();
                 }
             }
 

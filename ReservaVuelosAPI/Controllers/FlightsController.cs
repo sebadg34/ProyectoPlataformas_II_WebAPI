@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using ReservaVuelosAPI.Models;
 
@@ -15,11 +16,16 @@ namespace ReservaVuelosAPI.Controllers
     /// <summary>
     /// Flight controller, esta relacionado directamente al modelo Flight.
     /// </summary>
+    [EnableCors(origins: "http://localhost:52811", headers: "*", methods: "*")]
     public class FlightsController : ApiController
     {
         // Obtiene la entidad de la base de datos.
         private DBEntities db = new DBEntities();
 
+        public void FlightsControllerTest(DBEntities _db, int flag)
+        {
+            db = _db;
+        }
         /// <summary>
         /// Metodo que obtiene todos los vuelos de la base de datos.
         /// </summary>
@@ -45,12 +51,14 @@ namespace ReservaVuelosAPI.Controllers
         [ResponseType(typeof(Flight))]
         public IHttpActionResult GetFlight(int id)
         {
-            Flight flight = db.Flight.Find(id);
-            if (flight == null)
+            Flight flight;
+            try
             {
+                flight = db.Flight.Find(id);
+            }
+            catch (Exception) { 
                 return NotFound();
             }
-
             return Ok(flight);
         }
 
@@ -63,10 +71,13 @@ namespace ReservaVuelosAPI.Controllers
         [Route("api/lastflight")]
         public IHttpActionResult GetLastFlight()
         {
+            Flight flight;
             var maxVuelo = db.Flight.Max(Flight => Flight.ID);
-            Flight flight = db.Flight.Find(maxVuelo);
-            if (flight == null)
+            try
             {
+                flight = db.Flight.Find(maxVuelo);
+            }
+            catch (Exception) {
                 return NotFound();
             }
             return Ok(flight);
@@ -91,7 +102,20 @@ namespace ReservaVuelosAPI.Controllers
             }
 
             db.Flight.Add(flight);
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                if (FlightExists(flight.ID)) { 
+                    return Conflict(); 
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
 
             return CreatedAtRoute("DefaultApi", new { id = flight.ID }, flight);
         }

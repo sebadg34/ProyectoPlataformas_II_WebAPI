@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using ReservaVuelosAPI.Models;
 
@@ -15,11 +16,16 @@ namespace ReservaVuelosAPI.Controllers
     /// <summary>
     /// User controller, esta relacionado directamente al modelo User.
     /// </summary>
+    [EnableCors(origins: "http://localhost:52811", headers: "*", methods: "*")]
     public class UsersController : ApiController
     {
         // Obtiene la entidad de la base de datos.
         private DBEntities db = new DBEntities();
 
+        public void UsersControllerTest(DBEntities _db, int flag)
+        {
+            db = _db;
+        }
         /// <summary>
         /// Metodo que obtiene todos los usuarios de la base de datos.
         /// </summary>
@@ -88,7 +94,7 @@ namespace ReservaVuelosAPI.Controllers
             {
                 db.SaveChanges();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception)
             {
                 if (!UserExists(id))
                 {

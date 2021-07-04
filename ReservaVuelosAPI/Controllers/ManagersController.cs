@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using ReservaVuelosAPI.Models;
 
@@ -15,11 +16,16 @@ namespace ReservaVuelosAPI.Controllers
     /// <summary>
     /// Manager controller, esta relacionado directamente al modelo Manager.
     /// </summary>
+    [EnableCors(origins: "http://localhost:52811", headers: "*", methods: "*")]
     public class ManagersController : ApiController
     {
         // Obtiene la entidad de la base de datos.
         private DBEntities db = new DBEntities();
 
+        public void ManagersControllerTest(DBEntities _db, int flag)
+        {
+            db = _db;
+        }
         /// <summary>
         /// Metodo que obtiene todos los administradores de la base de datos.
         /// </summary>
@@ -45,9 +51,12 @@ namespace ReservaVuelosAPI.Controllers
         [ResponseType(typeof(Manager))]
         public IHttpActionResult GetManager(int id)
         {
-            Manager manager = db.Manager.Find(id);
-            if (manager == null)
+            Manager manager;
+            try
             {
+                manager = db.Manager.Find(id);
+            }
+            catch(Exception){
                 return NotFound();
             }
 
@@ -78,7 +87,7 @@ namespace ReservaVuelosAPI.Controllers
             {
                 db.SaveChanges();
             }
-            catch (DbUpdateException)
+            catch (Exception)
             {
                 if (ManagerExists(manager.ID))
                 {
@@ -86,7 +95,7 @@ namespace ReservaVuelosAPI.Controllers
                 }
                 else
                 {
-                    throw;
+                    return BadRequest();
                 }
             }
 
