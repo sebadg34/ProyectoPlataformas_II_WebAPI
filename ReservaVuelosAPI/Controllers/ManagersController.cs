@@ -9,14 +9,12 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using ReservaVuelosAPI.Models;
-using System.Web.Http.Cors;
 
 namespace ReservaVuelosAPI.Controllers
 {
     /// <summary>
     /// Manager controller, esta relacionado directamente al modelo Manager.
     /// </summary>
-    [EnableCors(origins: "http://localhost:52811", headers: "*", methods: "*")]
     public class ManagersController : ApiController
     {
         // Obtiene la entidad de la base de datos.
@@ -55,8 +53,9 @@ namespace ReservaVuelosAPI.Controllers
 
             return Ok(manager);
         }
+
         /// <summary>
-        ///  Metodo que realiza una inserción en la base de datos dado un administrador en especifico.
+        ///  Metodo que realiza una inserciÃ³n en la base de datos dado un administrador en especifico.
         /// </summary>
         /// <param name="manager">
         ///  manager se recibe desde la aplicacion web.
@@ -99,7 +98,8 @@ namespace ReservaVuelosAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns>
-        /// Devuelve el numero de elementos que satisfacen la condicion.</returns>
+        /// Devuelve el numero de elementos que satisfacen la condicion.
+        /// </returns>
         private bool ManagerExists(int id)
         {
             return db.Manager.Count(e => e.ID == id) > 0;

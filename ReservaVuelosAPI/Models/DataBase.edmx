@@ -43,8 +43,6 @@
           <Property Name="Rut" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="ID" Type="int" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DB.dbo.Reserve' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="Reserve">
           <Key>
             <PropertyRef Name="ID" />
@@ -53,7 +51,7 @@ advertencia 6002: La tabla o vista 'DB.dbo.Reserve' no tiene definida ninguna cl
           <Property Name="ID_Customer" Type="int" Nullable="false" />
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
-        <EntityType Name="Rol">
+        <EntityType Name="User">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -66,14 +64,8 @@ advertencia 6002: La tabla o vista 'DB.dbo.Reserve' no tiene definida ninguna cl
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Flight" EntityType="Self.Flight" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Manager" EntityType="Self.Manager" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Reserve" EntityType="Self.Reserve" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Reserve].[ID_Flight] AS [ID_Flight], 
-    [Reserve].[ID_Customer] AS [ID_Customer], 
-    [Reserve].[ID] AS [ID]
-    FROM [dbo].[Reserve] AS [Reserve]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="Reserve" EntityType="Self.Reserve" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
@@ -118,15 +110,6 @@ advertencia 6002: La tabla o vista 'DB.dbo.Reserve' no tiene definida ninguna cl
           <Property Name="Rut" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ID" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityType Name="Rol">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Contrasenia" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ID_Rol" Type="Boolean" Nullable="false" />
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-        </EntityType>
         <EntityType Name="Reserve">
           <Key>
             <PropertyRef Name="ID" />
@@ -135,12 +118,21 @@ advertencia 6002: La tabla o vista 'DB.dbo.Reserve' no tiene definida ninguna cl
           <Property Name="ID_Customer" Type="Int32" Nullable="false" />
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Contrasenia" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID_Rol" Type="Boolean" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
         <EntityContainer Name="DBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Customer" EntityType="Self.Customer" />
           <EntitySet Name="Flight" EntityType="Self.Flight" />
           <EntitySet Name="Manager" EntityType="Self.Manager" />
-          <EntitySet Name="Rol" EntityType="Self.Rol" />
           <EntitySet Name="Reserve" EntityType="Self.Reserve" />
+          <EntitySet Name="User" EntityType="Self.User" />
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -189,21 +181,21 @@ advertencia 6002: La tabla o vista 'DB.dbo.Reserve' no tiene definida ninguna cl
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Rol">
-            <EntityTypeMapping TypeName="DBModel.Rol">
-              <MappingFragment StoreEntitySet="Rol">
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Contrasenia" ColumnName="Contrasenia" />
-                <ScalarProperty Name="ID_Rol" ColumnName="ID_Rol" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Reserve">
             <EntityTypeMapping TypeName="DBModel.Reserve">
               <MappingFragment StoreEntitySet="Reserve">
                 <ScalarProperty Name="ID_Flight" ColumnName="ID_Flight" />
                 <ScalarProperty Name="ID_Customer" ColumnName="ID_Customer" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="DBModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Contrasenia" ColumnName="Contrasenia" />
+                <ScalarProperty Name="ID_Rol" ColumnName="ID_Rol" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

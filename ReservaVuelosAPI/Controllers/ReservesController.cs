@@ -9,14 +9,12 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using ReservaVuelosAPI.Models;
-using System.Web.Http.Cors;
 
 namespace ReservaVuelosAPI.Controllers
 {
     /// <summary>
     /// Reserve controller, esta relacionado directamente al modelo Reserve.
     /// </summary>
-    [EnableCors(origins: "http://localhost:52811", headers: "*", methods: "*")]
     public class ReservesController : ApiController
     {
         // Obtiene la entidad de la base de datos.
@@ -74,24 +72,9 @@ namespace ReservaVuelosAPI.Controllers
             }
 
             db.Reserve.Add(reserve);
+            db.SaveChanges();
 
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateException)
-            {
-                if (ReserveExists(reserve.ID_Flight))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return CreatedAtRoute("DefaultApi", new { id = reserve.ID_Flight }, reserve);
+            return CreatedAtRoute("DefaultApi", new { id = reserve.ID }, reserve);
         }
 
         /// <summary>
@@ -101,10 +84,11 @@ namespace ReservaVuelosAPI.Controllers
         ///  id se recibe desde la aplicacion web.
         /// </param>
         /// <returns>
-        /// Devuelve el numero de elementos que satisfacen la condicion.</returns>
+        /// Devuelve el numero de elementos que satisfacen la condicion.
+        /// </returns>
         private bool ReserveExists(int id)
         {
-            return db.Reserve.Count(e => e.ID_Flight == id) > 0;
+            return db.Reserve.Count(e => e.ID == id) > 0;
         }
 
         #region Metodos temporales
@@ -171,6 +155,5 @@ namespace ReservaVuelosAPI.Controllers
             base.Dispose(disposing);
         } **/
         #endregion
-
     }
 }

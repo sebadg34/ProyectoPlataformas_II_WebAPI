@@ -9,14 +9,12 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using ReservaVuelosAPI.Models;
-using System.Web.Http.Cors;
 
 namespace ReservaVuelosAPI.Controllers
 {
     /// <summary>
     /// Flight controller, esta relacionado directamente al modelo Flight.
     /// </summary>
-    [EnableCors(origins: "http://localhost:52811", headers: "*", methods: "*")]
     public class FlightsController : ApiController
     {
         // Obtiene la entidad de la base de datos.
@@ -47,30 +45,31 @@ namespace ReservaVuelosAPI.Controllers
         [ResponseType(typeof(Flight))]
         public IHttpActionResult GetFlight(int id)
         {
-            // Se busca el ultimo vuelo
-            if(id == -1)
+            Flight flight = db.Flight.Find(id);
+            if (flight == null)
             {
-                var maxVuelo = db.Flight.Max(Flight => Flight.ID);
-                Flight flight = db.Flight.Find(maxVuelo);
-                
-                if (flight == null)
-                {
-                    return NotFound();
-                }
-                return Ok(flight);
+                return NotFound();
             }
 
-            else
-            {
-                Flight flight = db.Flight.Find(id);
-                if (flight == null)
-                {
-                    return NotFound();
-                }
+            return Ok(flight);
+        }
 
-                return Ok(flight);
+        /// <summary>
+        /// Metodo que obtiene el Ãºltimo vuelo.
+        /// </summary>
+        /// <returns>
+        /// Retorna el ultimo vuelo.
+        /// </returns>
+        [Route("api/lastflight")]
+        public IHttpActionResult GetLastFlight()
+        {
+            var maxVuelo = db.Flight.Max(Flight => Flight.ID);
+            Flight flight = db.Flight.Find(maxVuelo);
+            if (flight == null)
+            {
+                return NotFound();
             }
-            
+            return Ok(flight);
         }
 
         /// <summary>
@@ -98,17 +97,44 @@ namespace ReservaVuelosAPI.Controllers
         }
 
         /// <summary>
+        /// Metodo que elimina un vuelo de la BD.
+        /// </summary>
+        /// <param name="id">
+        /// Recibe el id desde la aplicacion web.
+        /// </param>
+        /// <returns>
+        /// Retorna el estado: si se pudo eliminar o surgio algun problema.
+        /// </returns>
+        // DELETE: api/Flights/5
+        [ResponseType(typeof(Flight))]
+        public IHttpActionResult DeleteFlight(int id)
+        {
+            Flight flight = db.Flight.Find(id);
+            if (flight == null)
+            {
+                return NotFound();
+            }
+
+            db.Flight.Remove(flight);
+            db.SaveChanges();
+
+            return Ok(flight);
+        }
+
+        /// <summary>
         /// Verifica si el vuelo existe.
         /// </summary>
         /// <param name="id">
         /// id se recibe desde la aplicacion web.
         /// </param>
         /// <returns>
-        /// Devuelve el numero de elementos que satisfacen la condicion.</returns>
+        /// Devuelve el numero de elementos que satisfacen la condicion.
+        /// </returns>
         private bool FlightExists(int id)
         {
             return db.Flight.Count(e => e.ID == id) > 0;
         }
+
         #region Metodos temporales
         /** Metodo aun no usado, se vera si se utilizara.
         // PUT: api/Flights/5
@@ -146,24 +172,6 @@ namespace ReservaVuelosAPI.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         } **/
 
-
-        /** Metodo aun no usado, se vera si se utilizara.
-        // DELETE: api/Flights/5
-        [ResponseType(typeof(Flight))]
-        public IHttpActionResult DeleteFlight(int id)
-        {
-            Flight flight = db.Flight.Find(id);
-            if (flight == null)
-            {
-                return NotFound();
-            }
-
-            db.Flight.Remove(flight);
-            db.SaveChanges();
-
-            return Ok(flight);
-        } **/
-
         /** Metodo aun no usado, se vera si se utilizara.
         protected override void Dispose(bool disposing)
         {
@@ -174,6 +182,5 @@ namespace ReservaVuelosAPI.Controllers
             base.Dispose(disposing);
         } **/
         #endregion
-
     }
 }

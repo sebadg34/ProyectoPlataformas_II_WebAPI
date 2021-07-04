@@ -39,14 +39,13 @@ namespace ReservaVuelosAPI.Models
             [Required(ErrorMessage = "Ingrese correctamente categoría.")]
             public string Categoria;
 
-            // Validacion de los cupos; es un campo requerido. Debe estar entre 30 y 40.
+            // Validacion de los cupos; es un campo requerido.
             [Required(ErrorMessage = "Ingrese correctamente el cupo.")]
-            [Range(30,40, ErrorMessage = "Los cupos deben estar entre 30 y 40.")]
             public int Cupos;
 
             // ID es la clave primaria.Es autogenerado (incrementado automatico en la base de datos) asi que no es necesario validarlo mas que eso.
             [Key]
             public int ID;
         }
-    } 
+    }
 }

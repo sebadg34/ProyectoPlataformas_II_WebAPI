@@ -9,14 +9,12 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using ReservaVuelosAPI.Models;
-using System.Web.Http.Cors;
 
 namespace ReservaVuelosAPI.Controllers
 {
     /// <summary>
     /// Customer controller, esta relacionado directamente al modelo Customer.
     /// </summary>
-    [EnableCors(origins: "http://localhost:52811", headers: "*", methods: "*")]
     public class CustomersController : ApiController
     {
         // Obtiene la entidad de la base de datos.
@@ -35,13 +33,13 @@ namespace ReservaVuelosAPI.Controllers
         }
 
         /// <summary>
-        /// Metodo que obtiene a un cliente dada una id en específico.
+        /// Metodo que obtiene a un cliente dada una id en especifico.
         /// </summary>
         /// <param name="id">
         /// id es recibido desde la aplicacion web.
         /// </param>
         /// <returns>
-        /// Retona la información del cliente si es que lo encuentra.
+        /// Retona la informacion del cliente si es que lo encuentra.
         /// </returns>
         // GET: api/Customers/5
         [ResponseType(typeof(Customer))]
@@ -57,7 +55,7 @@ namespace ReservaVuelosAPI.Controllers
         }
 
         /// <summary>
-        /// Metodo que realiza una inserción en la base de datos dado un cliente en especifico.
+        /// Metodo que realiza una insercion en la base de datos dado un cliente en especifico.
         /// </summary>
         /// <param name="customer">
         /// Customer es recibido desde la aplicacion web.
@@ -73,7 +71,7 @@ namespace ReservaVuelosAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            
+
             db.Customer.Add(customer);
 
             try
@@ -94,7 +92,8 @@ namespace ReservaVuelosAPI.Controllers
 
             return CreatedAtRoute("DefaultApi", new { id = customer.ID }, customer);
         }
-      
+
+
         /// <summary>
         /// Verifica si el cliente existe.
         /// </summary>
@@ -102,7 +101,8 @@ namespace ReservaVuelosAPI.Controllers
         /// id se recibe desde la aplicacion web.
         /// </param>
         /// <returns>
-        /// Devuelve el numero de elementos que satisfacen la condicion.</returns>
+        /// Devuelve el numero de elementos que satisfacen la condicion.
+        /// </returns>
         private bool CustomerExists(int id)
         {
             return db.Customer.Count(e => e.ID == id) > 0;

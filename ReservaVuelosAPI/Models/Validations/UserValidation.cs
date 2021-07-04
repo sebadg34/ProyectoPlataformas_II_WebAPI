@@ -4,14 +4,15 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
+
 namespace ReservaVuelosAPI.Models
 {
     /// <summary>
-    /// Clase parcial del modelo de rol, usada para validar las entradas de la entidad Rol.
-    /// Se utiliza Metadata para hacer la relacion con el modelo de datos Rol.
+    /// Clase parcial del modelo de user, usada para validar las entradas de la entidad User.
+    /// Se utiliza Metadata para hacer la relacion con el modelo de datos User.
     /// </summary>
-    [MetadataType(typeof(Rol.Metadata))]
-    public partial class Rol
+    [MetadataType(typeof(User.Metadata))]
+    public partial class User
     {
         sealed class Metadata
         {

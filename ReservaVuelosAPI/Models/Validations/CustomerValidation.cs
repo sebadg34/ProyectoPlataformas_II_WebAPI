@@ -11,7 +11,7 @@ namespace ReservaVuelosAPI.Models
     /// Se utiliza Metadata para hacer la relacion con el modelo de datos Customer.
     /// </summary>
     [MetadataType(typeof(Customer.Metadata))]
-    public partial class Customer 
+    public partial class Customer
     {
         sealed class Metadata
         {

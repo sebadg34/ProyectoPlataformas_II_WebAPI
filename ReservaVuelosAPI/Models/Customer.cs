@@ -11,12 +11,7 @@ namespace ReservaVuelosAPI.Models
 {
     using System;
     using System.Collections.Generic;
-
-    /// <summary>
-    /// Clase parcial del modelo del Customer, contiene la declaracion de cada una de sus propiedades.
-    /// ID es la clave primaria, es correlativa al ID del modelo Rol.
-    /// Rut o numero de pasaporte pueden ser null.
-    /// </summary>
+    
     public partial class Customer
     {
         public string Nombres { get; set; }
