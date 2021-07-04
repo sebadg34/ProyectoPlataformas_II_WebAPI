@@ -21,10 +21,12 @@ namespace ReservaVuelosAPI.Models
 
             // Validacion de la ciudad de destino; es un campo requerido.
             [Required(ErrorMessage = "Ingrese correctamente la ciudad de destino.")]
+            [RegularExpression("([A-Za-záéíóúñÁÉÍÓÚ])*", ErrorMessage = "Solo letras.")]
             public string Ciudad_Destino;
 
             // Validacion de la ciudad de origen; es un campo requerido.
             [Required(ErrorMessage = "Ingrese correctamente la ciudad de origen.")]
+            [RegularExpression("([A-Za-záéíóúñÁÉÍÓÚ])*", ErrorMessage = "Solo letras.")]
             public string Ciudad_Origen;
 
             // Validacion de la fecha de salida; es un campo requerido.

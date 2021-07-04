@@ -17,10 +17,12 @@ namespace ReservaVuelosAPI.Models
         {
             // Validacion del nombre; es un campo requerido.
             [Required(ErrorMessage = "Ingrese el nombre.")]
+            [RegularExpression("([A-Za-záéíóúñÁÉÍÓÚ])*", ErrorMessage = "Solo letras.")]
             public string Nombres;
 
             // Validacion del apellido; es un campo requerido.
             [Required(ErrorMessage = "Ingrese el apellido.")]
+            [RegularExpression("([A-Za-záéíóúñÁÉÍÓÚ])*", ErrorMessage = "Solo letras.")]
             public string Apellidos;
 
             // Validacion del rut; es un campo requerido. Se utilizo una expresion regular para validar el formato en el cual se ingresan los ruts. EJ: 12345678-9.
@@ -33,6 +35,7 @@ namespace ReservaVuelosAPI.Models
 
             // Validacion de la direccion fisica del cliente; es un campo requerido.
             [Required(ErrorMessage = "Ingrese la dirección.")]
+            [RegularExpression("([A-Za-z])*", ErrorMessage = "Solo letras.")]
             public string Direccion;
 
             // Validacion del numero de direccion del cliente; es un campo requerido.
@@ -46,10 +49,12 @@ namespace ReservaVuelosAPI.Models
 
             // Validacion del nombre de emergencia; es un campo requerido.
             [Required(ErrorMessage = "Ingrese el nombre de emergencia.")]
+            [RegularExpression("([A-Za-záéíóúñÁÉÍÓÚ])*", ErrorMessage = "Solo letras.")]
             public string Nombres_Emergencia;
 
             // Validacion del apellido de emergencia; es un campo requerido.
             [Required(ErrorMessage = "Ingrese el apellido de emergencia.")]
+            [RegularExpression("([A-Za-záéíóúñÁÉÍÓÚ])*", ErrorMessage = "Solo letras.")]
             public string Apellidos_Emergencia;
 
             // Validacion del numero de telefono de emergencia; es un campo requerido. Se utilizo una expresion regular para validar el formato del numero de telefono. EJ: 912345678.
