@@ -22,10 +22,6 @@ namespace ReservaVuelosAPI.Controllers
         // Obtiene la entidad de la base de datos.
         private DBEntities db = new DBEntities();
 
-        public void UsersControllerTest(DBEntities _db, int flag)
-        {
-            db = _db;
-        }
         /// <summary>
         /// Metodo que obtiene todos los usuarios de la base de datos.
         /// </summary>
@@ -52,14 +48,22 @@ namespace ReservaVuelosAPI.Controllers
         public IHttpActionResult GetUser(string email)
         {
             // Busca en la entidad de la base de datos si existe un usuario que tenga el email enviado por parametro.
-            User users = db.User.SingleOrDefault(User => User.Email == email);
+            User user;
 
-            if (users == null)
+            try
+            {
+                user = db.User.SingleOrDefault(User => User.Email == email);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception)
             {
                 return NotFound();
             }
 
-            return Ok(users);
+            return Ok(user);
         }
 
         /// <summary>

@@ -1,13 +1,10 @@
-﻿using Autofac.Extras.Moq;
-using ReservaVuelosAPI.Models;
+﻿using ReservaVuelosAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
-using Autofac;
-using Moq;
 using ReservaVuelosAPI.Controllers;
 using System.Web.Http;
 using System.Data.Entity.Infrastructure;
@@ -29,11 +26,8 @@ namespace ReservaVuelosAPI.ReservaVuelosAPI.Test
         {
             // Arrange
             DBEntities db = new DBEntities();
-            Mock<DBEntities> _db = new Mock<DBEntities>();
-            _db.Setup(x => x.Flight).Returns(db.Flight);
 
             FlightsController controller = new FlightsController();
-            controller.FlightsControllerTest(_db.Object, 0);
 
             // Act
             IQueryable<Flight> expected = db.Flight;
@@ -52,12 +46,8 @@ namespace ReservaVuelosAPI.ReservaVuelosAPI.Test
         {
             // Arrange
             int id = 1;
-            DBEntities db = new DBEntities();
-            Mock<DBEntities> _db = new Mock<DBEntities>();
-            _db.Setup(x => x.Flight.Find(id)).Returns(db.Flight.Find(id));
 
             FlightsController controller = new FlightsController();
-            controller.FlightsControllerTest(_db.Object, 0);
 
             // Act
             IHttpActionResult actionResult = controller.GetFlight(id);
@@ -77,9 +67,7 @@ namespace ReservaVuelosAPI.ReservaVuelosAPI.Test
         {
             // Arrange
             int id = 1000;
-            Mock<DBEntities> _db = new Mock<DBEntities>();
             FlightsController controller = new FlightsController();
-            controller.FlightsControllerTest(_db.Object, 0);
 
             // Act
             IHttpActionResult actionResult = controller.GetFlight(id);

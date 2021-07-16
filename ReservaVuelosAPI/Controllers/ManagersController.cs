@@ -22,10 +22,6 @@ namespace ReservaVuelosAPI.Controllers
         // Obtiene la entidad de la base de datos.
         private DBEntities db = new DBEntities();
 
-        public void ManagersControllerTest(DBEntities _db, int flag)
-        {
-            db = _db;
-        }
         /// <summary>
         /// Metodo que obtiene todos los administradores de la base de datos.
         /// </summary>
@@ -55,8 +51,13 @@ namespace ReservaVuelosAPI.Controllers
             try
             {
                 manager = db.Manager.Find(id);
+                if (manager == null)
+                {
+                    return NotFound();
+                }
             }
-            catch(Exception){
+            catch (Exception)
+            {
                 return NotFound();
             }
 

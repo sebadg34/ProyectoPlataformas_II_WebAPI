@@ -22,11 +22,6 @@ namespace ReservaVuelosAPI.Controllers
         // Obtiene la entidad de la base de datos.
         private DBEntities db = new DBEntities();
 
-        public void CustomersControllerTest(DBEntities _db, int flag)
-        {
-            db = _db;
-        }
-
         /// <summary>
         /// Metodo que obtiene todos los clientes de la base de datos.
         /// </summary>
@@ -53,11 +48,16 @@ namespace ReservaVuelosAPI.Controllers
         public IHttpActionResult GetCustomer(int id)
         {
             Customer customer;
-            try { 
-                customer = db.Customer.Find(id); 
+            try
+            {
+                customer = db.Customer.Find(id);
+                if (customer == null)
+                {
+                    return NotFound();
+                }
             }
-            
-            catch(Exception)
+
+            catch (Exception)
             {
                 return NotFound();
             }

@@ -1,13 +1,10 @@
-﻿using Autofac.Extras.Moq;
-using ReservaVuelosAPI.Models;
+﻿using ReservaVuelosAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
-using Autofac;
-using Moq;
 using ReservaVuelosAPI.Controllers;
 using System.Web.Http;
 using System.Data.Entity.Infrastructure;
@@ -29,11 +26,8 @@ namespace ReservaVuelosAPI.ReservaVuelosAPI.Test
         {
             // Arrange
             DBEntities db = new DBEntities();
-            Mock<DBEntities> _db = new Mock<DBEntities>();
-            _db.Setup(x => x.Customer).Returns(db.Customer);
 
             CustomersController controller = new CustomersController();
-            controller.CustomersControllerTest(_db.Object, 0);
 
             // Act
             IQueryable<Customer> expected = db.Customer;
@@ -52,12 +46,7 @@ namespace ReservaVuelosAPI.ReservaVuelosAPI.Test
         {
             // Arrange
             int id = 1;
-            DBEntities db = new DBEntities();
-            Mock<DBEntities> _db = new Mock<DBEntities>();
-            _db.Setup(x => x.Customer.Find(id)).Returns(db.Customer.Find(id));
-
             CustomersController controller = new CustomersController();
-            controller.CustomersControllerTest(_db.Object, 0);
 
             // Act
             IHttpActionResult actionResult = controller.GetCustomer(id);
@@ -76,10 +65,8 @@ namespace ReservaVuelosAPI.ReservaVuelosAPI.Test
         public void GetCustomerIdShouldNot()
         {
             // Arrange
-            int id = 1000;
-            Mock<DBEntities> _db = new Mock<DBEntities>();
+            int id = 1005;
             CustomersController controller = new CustomersController();
-            controller.CustomersControllerTest(_db.Object, 0);
 
             // Act
             IHttpActionResult actionResult = controller.GetCustomer(id);

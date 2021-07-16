@@ -22,10 +22,6 @@ namespace ReservaVuelosAPI.Controllers
         // Obtiene la entidad de la base de datos.
         private DBEntities db = new DBEntities();
 
-        public void FlightsControllerTest(DBEntities _db, int flag)
-        {
-            db = _db;
-        }
         /// <summary>
         /// Metodo que obtiene todos los vuelos de la base de datos.
         /// </summary>
@@ -55,8 +51,13 @@ namespace ReservaVuelosAPI.Controllers
             try
             {
                 flight = db.Flight.Find(id);
+                if (flight == null)
+                {
+                    return NotFound();
+                }
             }
-            catch (Exception) { 
+            catch (Exception)
+            {
                 return NotFound();
             }
             return Ok(flight);

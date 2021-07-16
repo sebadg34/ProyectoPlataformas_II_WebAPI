@@ -22,11 +22,6 @@ namespace ReservaVuelosAPI.Controllers
         // Obtiene la entidad de la base de datos.
         private DBEntities db = new DBEntities();
 
-        public void ReservesControllerTest(DBEntities _db, int flag)
-        {
-            db = _db;
-        }
-
         /// <summary>
         /// Metodo que obtiene todas las reservas en la base de datos.
         /// </summary>
@@ -53,11 +48,16 @@ namespace ReservaVuelosAPI.Controllers
         {
             Reserve reserve;
 
-            try { 
-            reserve= db.Reserve.Find(id);
+            try
+            {
+                reserve = db.Reserve.Find(id);
+                if (reserve == null)
+                {
+                    return NotFound();
+                }
             }
-
-            catch (Exception) { 
+            catch (Exception)
+            {
                 return NotFound();
             }
             return Ok(reserve);
