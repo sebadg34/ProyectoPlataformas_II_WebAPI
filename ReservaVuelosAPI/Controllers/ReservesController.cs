@@ -82,6 +82,9 @@ namespace ReservaVuelosAPI.Controllers
             }
 
             db.Reserve.Add(reserve);
+            Flight flight = db.Flight.SingleOrDefault(Flight => Flight.ID == reserve.ID_Flight);
+            flight.Cupos--;
+            
             try
             {
                 db.SaveChanges();
