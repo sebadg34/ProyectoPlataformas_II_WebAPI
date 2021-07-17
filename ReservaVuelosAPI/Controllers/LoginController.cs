@@ -26,29 +26,48 @@ namespace ReservaVuelosAPI.Controllers
         /// Metodo utilizado para entrar al sistema mediante el recibo de un email y contraseña.
         /// La verificacion se realiza mediante comparacion de hashes creados por Bcrypt.
         /// </summary>
-        /// <param name="rol">Objeto recibido que contiene el email y contraseña del usuario entrante</param>
+
+        /// <param name="user">Objeto recibido que contiene el email y contraseña del usuario entrante</param>
         /// <returns></returns>
         // POST: api/Login
-        [ResponseType(typeof(Rol))]
-        public IHttpActionResult Post([FromBody]Rol rol)
+        [ResponseType(typeof(User))]
+        // se podria usar HttpResponseMessage  con return Request.CreateResponse(HttpStatusCode.NotFound, id);
+        public IHttpActionResult Post([FromBody]User user)
         {
 
             // En caso de enviar un dato vacio
-            if (rol.Email == null || rol.Contrasenia == null)
+            if (user.Email == null || user.Contrasenia == null)
             {
-                return BadRequest("algo falta");
-            }
-            // Buscar el usuario registrado en el sistema.
-            Rol registeredRol = db.Rol.SingleOrDefault(Rol => Rol.Email == rol.Email);
+                string message = "";
+                if (user.Email == null && user.Contrasenia == null)
+                {
+                    message = "Correo y contraseña faltante";
+                }
+                else if (user.Email == null)
+                {
+                    message = "Correo faltante";
+                }
+                else if (user.Contrasenia == null) {
+                    message = "Contraseña faltante";
+                }
+                return BadRequest(message);
+            } 
 
+            // Buscar el usuario registrado en el sistema.
+            User registeredUser = db.User.SingleOrDefault(User => User.Email == user.Email);
+            
             // En caso de no encontrar el usuario registrado
-            if (registeredRol == null)
+            if (registeredUser == null)
+
             {
                 return NotFound();
             }
 
             // verificar si la contraseña es correcta.
-            if (!BCrypt.Net.BCrypt.Verify(rol.Contrasenia, registeredRol.Contrasenia))
+            string pass = user.Contrasenia.ToString();
+
+            if (!BCrypt.Net.BCrypt.Verify(pass, (registeredUser.Contrasenia).ToString()))
+
             {
                 return Unauthorized();
             }
@@ -58,21 +77,23 @@ namespace ReservaVuelosAPI.Controllers
                 LoggedUser loggedUser = new LoggedUser();
 
                 // En caso de que sea un cliente 
-                if (registeredRol.ID_Rol == false) {
-                    Customer user = db.Customer.SingleOrDefault(Customer => Customer.ID == registeredRol.ID);
-                    loggedUser.Name = user.Nombres;
-                    loggedUser.Id = user.ID;
+
+                if (registeredUser.ID_Rol == false) {
+                    Customer customer = db.Customer.SingleOrDefault(Customer => Customer.ID == registeredUser.ID);
+                    loggedUser.Name = customer.Nombres;
+                    loggedUser.Id = customer.ID;
                 }
 
                 // En caso de que sea un administrador
-                else if (registeredRol.ID_Rol == true)
+                else if (registeredUser.ID_Rol == true)
                 {
-                    Manager user = db.Manager.SingleOrDefault(Manager => Manager.ID == registeredRol.ID);
-                    loggedUser.Name = user.Nombres;
-                    loggedUser.Id = user.ID;
+                    Manager admin = db.Manager.SingleOrDefault(Manager => Manager.ID == registeredUser.ID);
+                    loggedUser.Name = admin.Nombres;
+                    loggedUser.Id = admin.ID;
                 }
 
-                loggedUser.IdRol = registeredRol.ID_Rol;
+                loggedUser.IdRol = registeredUser.ID_Rol;
+
 
                 return Ok(loggedUser);
             }
