@@ -18,5 +18,18 @@ namespace ReservaVuelosAPI.Models
         public string Apellidos { get; set; }
         public string Rut { get; set; }
         public int ID { get; set; }
+
+        public Manager(string Nombres, string Apellidos, string Rut, int ID)
+        {
+            this.Nombres = Nombres;
+            this.Apellidos = Apellidos;
+            this.Rut = Rut;
+            this.ID = ID;
+        }
+
+        public Manager()
+        {
+
+        }
     }
 }

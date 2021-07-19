@@ -4,12 +4,12 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="6b94f66b0b21436d96e84297638d2ae2" Name="Diagram1">
-        <EntityTypeShape EntityType="DBModel.Customer" Width="1.5" PointX="8.125" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBModel.Flight" Width="1.5" PointX="8.125" PointY="4.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBModel.Manager" Width="1.5" PointX="4.625" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBModel.Rol" Width="1.5" PointX="6.25" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DBModel.Reserve" Width="1.5" PointX="4.75" PointY="4.125" IsExpanded="true" />
+      <Diagram DiagramId="88d1ced0f83d4cf38ae47a50d724deb3" Name="Diagram1">
+        <EntityTypeShape EntityType="DBModel.Customer" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Flight" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Manager" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Reserve" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.User" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

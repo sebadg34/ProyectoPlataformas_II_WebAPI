@@ -7,27 +7,57 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using ReservaVuelosAPI.Models;
 
 namespace ReservaVuelosAPI.Controllers
 {
+    /// <summary>
+    /// Customer controller, esta relacionado directamente al modelo Customer.
+    /// </summary>
+    [EnableCors(origins: "http://localhost:52811", headers: "*", methods: "*")]
     public class CustomersController : ApiController
     {
+        // Obtiene la entidad de la base de datos.
         private DBEntities db = new DBEntities();
 
+        /// <summary>
+        /// Metodo que obtiene todos los clientes de la base de datos.
+        /// </summary>
+        /// <returns>
+        /// Retorna todos los clientes existentes en la base de datos.
+        /// </returns>
         // GET: api/Customers
         public IQueryable<Customer> GetCustomer()
         {
             return db.Customer;
         }
 
+        /// <summary>
+        /// Metodo que obtiene a un cliente dada una id en especifico.
+        /// </summary>
+        /// <param name="id">
+        /// id es recibido desde la aplicacion web.
+        /// </param>
+        /// <returns>
+        /// Retona la informacion del cliente si es que lo encuentra.
+        /// </returns>
         // GET: api/Customers/5
         [ResponseType(typeof(Customer))]
         public IHttpActionResult GetCustomer(int id)
         {
-            Customer customer = db.Customer.Find(id);
-            if (customer == null)
+            Customer customer;
+            try
+            {
+                customer = db.Customer.Find(id);
+                if (customer == null)
+                {
+                    return NotFound();
+                }
+            }
+
+            catch (Exception)
             {
                 return NotFound();
             }
@@ -35,41 +65,15 @@ namespace ReservaVuelosAPI.Controllers
             return Ok(customer);
         }
 
-        // PUT: api/Customers/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutCustomer(int id, Customer customer)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != customer.ID)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(customer).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CustomerExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
+        /// <summary>
+        /// Metodo que realiza una insercion en la base de datos dado un cliente en especifico.
+        /// </summary>
+        /// <param name="customer">
+        /// Customer es recibido desde la aplicacion web.
+        /// </param>
+        /// <returns>
+        ///  Retorna el estado del metodo, si se pudo realizar la insercion o no.
+        /// </returns>
         // POST: api/Customers
         [ResponseType(typeof(Customer))]
         public IHttpActionResult PostCustomer(Customer customer)
@@ -79,13 +83,35 @@ namespace ReservaVuelosAPI.Controllers
                 return BadRequest(ModelState);
             }
 
+            Customer c;
+
+            if (customer.Rut != null)
+            {
+                c = db.Customer.SingleOrDefault(x => x.Rut == customer.Rut);
+
+                if (c != null)
+                {
+                    return Conflict();
+                }
+            }
+
+            if (customer.Numero_Pasaporte != null)
+            {
+                c = db.Customer.SingleOrDefault(x => x.Numero_Pasaporte == customer.Numero_Pasaporte);
+
+                if (c != null)
+                {
+                    return Conflict();
+                }
+            }
+
             db.Customer.Add(customer);
 
             try
             {
                 db.SaveChanges();
             }
-            catch (DbUpdateException)
+            catch (Exception)
             {
                 if (CustomerExists(customer.ID))
                 {
@@ -93,13 +119,66 @@ namespace ReservaVuelosAPI.Controllers
                 }
                 else
                 {
-                    throw;
+                    return BadRequest();
                 }
             }
 
             return CreatedAtRoute("DefaultApi", new { id = customer.ID }, customer);
         }
 
+
+        /// <summary>
+        /// Verifica si el cliente existe.
+        /// </summary>
+        /// <param name="id">
+        /// id se recibe desde la aplicacion web.
+        /// </param>
+        /// <returns>
+        /// Devuelve el numero de elementos que satisfacen la condicion.
+        /// </returns>
+        private bool CustomerExists(int id)
+        {
+            return db.Customer.Count(e => e.ID == id) > 0;
+        }
+
+        #region Metodos temporales
+        /** Metodo aun no usado, se vera si se utilizara.
+       // PUT: api/Customers/5
+       [ResponseType(typeof(void))]
+       public IHttpActionResult PutCustomer(int id, Customer customer)
+       {
+           if (!ModelState.IsValid)
+           {
+               return BadRequest(ModelState);
+           }
+
+           if (id != customer.ID)
+           {
+               return BadRequest();
+           }
+
+           db.Entry(customer).State = EntityState.Modified;
+
+           try
+           {
+               db.SaveChanges();
+           }
+           catch (DbUpdateConcurrencyException)
+           {
+               if (!CustomerExists(id))
+               {
+                   return NotFound();
+               }
+               else
+               {
+                   throw;
+               }
+           }
+
+           return StatusCode(HttpStatusCode.NoContent);
+       } **/
+
+        /** Metodo aun no usado, se vera si se utilizara.
         // DELETE: api/Customers/5
         [ResponseType(typeof(Customer))]
         public IHttpActionResult DeleteCustomer(int id)
@@ -114,8 +193,9 @@ namespace ReservaVuelosAPI.Controllers
             db.SaveChanges();
 
             return Ok(customer);
-        }
+        } **/
 
+        /** Metodo aun no usado, se vera si se utilizara.
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -123,11 +203,7 @@ namespace ReservaVuelosAPI.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        private bool CustomerExists(int id)
-        {
-            return db.Customer.Count(e => e.ID == id) > 0;
-        }
+        } **/
+        #endregion
     }
 }
