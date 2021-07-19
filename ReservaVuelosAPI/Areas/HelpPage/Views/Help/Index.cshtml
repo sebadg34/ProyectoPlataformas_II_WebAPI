@@ -6,7 +6,7 @@
 @model Collection<ApiDescription>
 
 @{
-    ViewBag.Title = "ASP.NET Web API Help Page";
+    ViewBag.Title = "Resumen API AirlinePlus";
 
     // Group APIs by controller
     ILookup<HttpControllerDescriptor, ApiDescription> apiGroups = Model.ToLookup(api => api.ActionDescriptor.ControllerDescriptor);
@@ -25,7 +25,8 @@
         <div class="content-wrapper">
             <h2>Introduction</h2>
             <p>
-                Provide a general description of your APIs here.
+                La API tiene como objetivo de controlar la inscripcion de vuelos, clientes y reservas de cada pasajero
+                para la aplicacion de reserva de vuelos de AirlinePlus, desarrollada por MakeMeister.
             </p>
         </div>
     </section>
