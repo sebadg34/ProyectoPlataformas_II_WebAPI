@@ -9,6 +9,7 @@ using System.Web.Http.Cors;
 namespace ReservaVuelosAPI.Controllers
 {
     [EnableCors(origins: "http://localhost:52811", headers: "*", methods: "*")]
+    [System.Web.Http.Description.ApiExplorerSettings(IgnoreApi = true)]
     public class ValuesController : ApiController
     {
         // GET api/values
