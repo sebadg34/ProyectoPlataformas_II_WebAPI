@@ -80,7 +80,7 @@ namespace ReservaVuelosAPI.Controllers
 
                 if (registeredUser.ID_Rol == false) {
                     Customer customer = db.Customer.SingleOrDefault(Customer => Customer.ID == registeredUser.ID);
-                    loggedUser.Name = customer.Nombres;
+                    loggedUser.Name = customer.Nombres + " " + customer.Apellidos;
                     loggedUser.Id = customer.ID;
                 }
 
@@ -88,7 +88,7 @@ namespace ReservaVuelosAPI.Controllers
                 else if (registeredUser.ID_Rol == true)
                 {
                     Manager admin = db.Manager.SingleOrDefault(Manager => Manager.ID == registeredUser.ID);
-                    loggedUser.Name = admin.Nombres;
+                    loggedUser.Name = admin.Nombres + " " + admin.Apellidos;
                     loggedUser.Id = admin.ID;
                 }
 
